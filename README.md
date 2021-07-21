@@ -34,15 +34,18 @@ const (
 	DbConn = "user=<your_user> password=<your_password> dbname=<your_database> sslmode=disable"
 )
 ```
-
+## URLS and Inspiration
+[https://github.com/golang-standards/project-layout]
+[https://blog.golang.org/using-go-modules]
+[https://www.calhoun.io/inserting-records-into-a-postgresql-database-with-gos-database-sql-package/]
+	
 ## Modules Used
 
 | Module | Url |
 | ------ | ------ |
 | Echo | [https://github.com/labstack/echo] |
 | PQ | [https://github.com/lib/pq] |
-
-
+	
 ## License
 
 MIT License
