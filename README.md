@@ -10,6 +10,12 @@ A small test to learn about go, go modules and the standard go project layout
 The idea was to do some code able to receive a GET and a POST saving some data into a Database without geeting depper into it and skipping testing.
 Also no validations are done in the Db Repository like checks for duplicated IDS and so on...
 
+### Second iteration
+- Implement more or less a data 'repository'
+- Working with injection
+- Endpoint testing using echo and gomock
+- Repo testing with gomock and pgxmock
+- Avoid data mutability and parameter validation (Not go compilant)
 
 ## Installation and SetUp
 
@@ -40,13 +46,20 @@ const (
 [https://blog.golang.org/using-go-modules]
 	
 [https://www.calhoun.io/inserting-records-into-a-postgresql-database-with-gos-database-sql-package/]
-	
+
+[https://duythhuynh.medium.com/gomock-unit-testing-made-easy-b59a0e947ba7]
+
+[https://echo.labstack.com/guide/testing/]
+
 ## Modules Used
 
 | Module | Url |
 | ------ | ------ |
 | Echo | [https://github.com/labstack/echo] |
-| PQ | [https://github.com/lib/pq] |
+| PGX | [https://github.com/jackc/pgx] |
+| GoMock | [https://github.com/golang/mock] |
+| PGXMock | [https://github.com/pashagolub/pgxmock] |
+| Testify   |[https://github.com/stretchr/testify] |
 	
 ## License
 
