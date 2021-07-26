@@ -1,9 +1,8 @@
 package movies
 
 import (
-	mmdb "api-testing/internal"
+	"api-testing/internal/creating"
 	mmdbMock "api-testing/internal/internalmocks"
-	"context"
 	. "github.com/golang/mock/gomock"
 	"github.com/labstack/echo/v4"
 	"github.com/stretchr/testify/assert"
@@ -23,12 +22,12 @@ func Test_CreateHandler(t *testing.T) {
 	rec := httptest.NewRecorder()
 
 	mr := mmdbMock.NewMockMovieRepository(controller)
+	srv := creating.NewMovieService(mr)
 	e := echo.New()
-	rf := CreateHandler(mr)
+	rf := CreateHandler(srv)
 	c := e.NewContext(req, rec)
 
-	movie, _ := mmdb.NewMovie("11", "Return to Houston", "Western", "100")
-	mr.EXPECT().Save(context.Background(), movie).Return(nil)
+	mr.EXPECT().Save(Any(), Any()).Return(nil)
 
 	if assert.NoError(t, rf(c)) {
 		assert.Equal(t, userJSON, rec.Body.String()[:len(rec.Body.String())-1])
@@ -43,11 +42,9 @@ func Test_CreateHandler_Error_EmptyString(t *testing.T) {
 
 	mr := mmdbMock.NewMockMovieRepository(controller)
 	e := echo.New()
-	rf := CreateHandler(mr)
+	srv := creating.NewMovieService(mr)
+	rf := CreateHandler(srv)
 	c := e.NewContext(req, rec)
-
-	//movie,_ := mmdb.NewMovie("11", "Return to Houston", "Western", "100")
-	//mr.EXPECT().Save(context.Background(), movie).Return(nil)
 
 	if assert.NoError(t, rf(c)) {
 		assert.True(t, strings.Contains(rec.Body.String(), "the field Name can not be empty"))

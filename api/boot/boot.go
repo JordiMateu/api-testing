@@ -1,6 +1,7 @@
 package boot
 
 import (
+	"api-testing/internal/creating"
 	"api-testing/internal/platform/server"
 	"api-testing/internal/platform/server/storage/psql"
 	"context"
@@ -21,7 +22,10 @@ func Run() error {
 		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
 		os.Exit(1)
 	}
-	movieRepository := psql.NewMovieRepository(conn)
-	srv := server.New(movieRepository)
+
+	m := psql.NewMovieRepository(conn)
+	s := creating.NewMovieService(m)
+
+	srv := server.New(s)
 	return srv.Start(":8080")
 }

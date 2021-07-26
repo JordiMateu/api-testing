@@ -1,21 +1,21 @@
 package server
 
 import (
-	mmdb "api-testing/internal"
+	"api-testing/internal/creating"
 	"api-testing/internal/platform/server/handler/health"
 	"api-testing/internal/platform/server/handler/movies"
 	"github.com/labstack/echo/v4"
 )
 
 type Server struct {
-	engine     *echo.Echo
-	repository mmdb.MovieRepository
+	engine       *echo.Echo
+	movieService creating.MovieService
 }
 
-func New(r mmdb.MovieRepository) *echo.Echo {
+func New(movieService creating.MovieService) *echo.Echo {
 	s := Server{
-		repository: r,
-		engine:     echo.New(),
+		engine:       echo.New(),
+		movieService: movieService,
 	}
 
 	s.registerRoutes()
@@ -24,5 +24,5 @@ func New(r mmdb.MovieRepository) *echo.Echo {
 
 func (s *Server) registerRoutes() {
 	s.engine.GET("/health", health.HealthHandler())
-	s.engine.POST("/movies", movies.CreateHandler(s.repository))
+	s.engine.POST("/movies", movies.CreateHandler(s.movieService))
 }

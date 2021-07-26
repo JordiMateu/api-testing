@@ -2,6 +2,8 @@ package movies
 
 import (
 	mmdb "api-testing/internal"
+	"api-testing/internal/creating"
+	"errors"
 	"github.com/labstack/echo/v4"
 	"net/http"
 )
@@ -13,20 +15,25 @@ type createRequest struct {
 	Duration string `json:"duration" form:"duration" query:"duration"`
 }
 
-func CreateHandler(movieRepository mmdb.MovieRepository) echo.HandlerFunc {
+func CreateHandler(s creating.MovieService) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		u := new(createRequest)
 		if err := c.Bind(u); err != nil {
 			return err
 		}
 
-		m, err := mmdb.NewMovie(u.ID, u.Name, u.Genre, u.Duration)
+		err := s.CreateMovie(c.Request().Context(), u.ID, u.Name, u.Genre, u.Duration)
 
 		if err != nil {
-			return c.JSON(http.StatusInternalServerError, err.Error())
+			switch {
+			case errors.Is(err, mmdb.ErrEmptyID),
+				errors.Is(err, mmdb.ErrEmptyName), errors.Is(err, mmdb.ErrEmptyGenre):
+				return c.JSON(http.StatusBadRequest, err.Error())
+			default:
+				return c.JSON(http.StatusInternalServerError, err.Error())
+			}
 		}
 
-		movieRepository.Save(c.Request().Context(), m)
 		return c.JSON(http.StatusCreated, u)
 	}
 }

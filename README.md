@@ -17,6 +17,11 @@ Also no validations are done in the Db Repository like checks for duplicated IDS
 - Repo testing with gomock and pgxmock
 - Avoid data mutability and parameter validation (Not go compilant)
 
+
+### Third iteration
+- Service Layer
+
+
 ## Installation and SetUp
 
 Download and install [Golang](//https://golang.org/).
