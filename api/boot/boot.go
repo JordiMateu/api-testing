@@ -23,7 +23,7 @@ func Run() error {
 		os.Exit(1)
 	}
 
-	m := psql.NewMovieRepository(conn)
+	m := psql.NewMovieRepository(conn, 10)
 	s := creating.NewMovieService(m)
 
 	srv := server.New(s)

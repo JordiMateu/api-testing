@@ -2,6 +2,7 @@ package server
 
 import (
 	"api-testing/internal/creating"
+	"api-testing/internal/platform/middleware/stats"
 	"api-testing/internal/platform/server/handler/health"
 	"api-testing/internal/platform/server/handler/movies"
 	"github.com/labstack/echo/v4"
@@ -18,6 +19,8 @@ func New(movieService creating.MovieService) *echo.Echo {
 		movieService: movieService,
 	}
 
+	m := stats.NewMiddleStats()
+	s.engine.Use(m.MiddleStats)
 	s.registerRoutes()
 	return s.engine
 }
