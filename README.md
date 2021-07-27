@@ -21,6 +21,9 @@ Also no validations are done in the Db Repository like checks for duplicated IDS
 ### Third iteration
 - Service Layer
 
+### Fourth iteration
+- Using context to define DB query timeout value
+- Middleware implemented to keep track stats
 
 ## Installation and SetUp
 
@@ -55,6 +58,8 @@ const (
 [https://duythhuynh.medium.com/gomock-unit-testing-made-easy-b59a0e947ba7]
 
 [https://echo.labstack.com/guide/testing/]
+
+[https://blog.golang.org/context]
 
 ## Modules Used
 
